@@ -1,0 +1,20 @@
+---
+- hosts: SL
+
+  remote_user: deployment
+
+  vars:
+    download_url: http://download.oracle.com/otn-pub/java/jdk/8u40-b26/jdk-8u40-linux-x64.rpm
+    download_folder: /tmp
+    java_name: "{{download_folder}}/jdk1.8.0_40"
+    java_archive: "{{download_folder}}/jdk-8u40-linux-x64.rpm"
+
+  tasks:
+  - name: Delete deployApp folder
+    file: dest=~/deployApp state=absent
+
+  - name: Copy Orchestrator
+    copy: src=./temp/hajp-orchestrator-assembly.jar dest=~/deployApp/ owner=deployment group=deployment mode=0644
+
+  - name: Copy Monitor
+    copy: src=./temp/hajp-monitor.zip dest=~/deployApp/ owner=deployment group=deployment mode=0644

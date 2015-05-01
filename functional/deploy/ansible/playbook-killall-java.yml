@@ -1,0 +1,11 @@
+---
+- hosts: hajpdemo
+
+  sudo: yes
+
+  tasks:
+  - name: Kill All JDK Procs
+    command: pkill -f '/usr/java/latest/bin/java -jar'
+
+  - name: Kill All Java Procs
+    command: pkill -f 'java -jar'

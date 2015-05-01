@@ -1,0 +1,14 @@
+---
+- hosts: SL
+
+  remote_user: deployment
+
+  vars:
+    orchestrator_ip: 142.133.151.170
+    orchestrator_port: 2551
+
+  tasks:
+  - name: Launch orchestrator
+    command: /usr/java/latest/bin/java -jar ~/deployApp/hajp-orchestrator-assembly.jar {{ orchestrator_ip }} {{ orchestrator_port  }}
+    async: 999999
+    poll: 0

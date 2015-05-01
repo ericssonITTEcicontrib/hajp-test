@@ -1,0 +1,10 @@
+---
+- hosts: AM:HS
+
+  remote_user: deployment
+
+  tasks:
+  - name: Launch Jenkins
+    command: /usr/java/latest/bin/java -jar ~/deployApp/jenkins.war
+    async: 999999
+    poll: 0
