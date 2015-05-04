@@ -1,7 +1,7 @@
 ---
 - hosts: AM:HS
 
-  remote_user: deployment
+  remote_user: eyindan
 
   vars:
     download_url: http://download.oracle.com/otn-pub/java/jdk/8u40-b26/jdk-8u40-linux-x64.rpm
@@ -17,4 +17,4 @@
     file: dest=~/.jenkins state=absent
 
   - name: Copy Jenkins War
-    copy: src=./jenkins.war dest=~/deployApp/ owner=deployment group=deployment mode=0644
+    copy: src=./jenkins.war dest=~/deployApp/ owner=eyindan group=eyindan mode=0644

@@ -1,6 +1,8 @@
 ---
 - hosts: hajpdemo
 
+  remote_user: eyindan
+
   sudo: yes
 
   tasks:

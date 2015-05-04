@@ -1,10 +1,10 @@
 ---
 - hosts: SL
 
-  remote_user: deployment
+  remote_user: eyindan
 
   vars:
-    orchestrator_ip: 142.133.151.170
+    orchestrator_ip: 142.133.151.53
     orchestrator_port: 2551
 
   tasks:
