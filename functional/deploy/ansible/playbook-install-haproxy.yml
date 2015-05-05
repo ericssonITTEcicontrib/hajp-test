@@ -1,0 +1,9 @@
+---
+- hosts: SL
+
+  remote_user: eyindan
+
+  tasks:
+  - name: install the latest version of Haproxy
+    yum: name=haproxy state=latest
+    sudo: yes

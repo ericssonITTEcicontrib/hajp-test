@@ -8,6 +8,12 @@
   tasks:
   - name: Kill All JDK Procs
     command: pkill -f '/usr/java/latest/bin/java -jar'
+    ignore_errors: True
 
   - name: Kill All Java Procs
-    command: pkill -f 'java -jar'
+    command: pkill -f 'java'
+    ignore_errors: True
+
+#  - name: Kill All HAPROXY Procs
+#    command: pkill -f 'haproxy'
+#    ignore_errors: True

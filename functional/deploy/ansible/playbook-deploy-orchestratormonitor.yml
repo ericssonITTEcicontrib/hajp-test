@@ -19,18 +19,30 @@
   - name: Assures {{project_root}}/monitor dir exists
     file: path={{project_root}}/monitor state=directory
 
+  - name: Assures {{project_root}}/conf dir exists
+    file: path={{project_root}}/conf state=directory
+
   - name: install the latest version of Unzip
     yum: name=unzip state=latest
     sudo: yes
 
   - name: Copy Orchestrator
-    copy: src=./temp/hajp-orchestrator-assembly.jar dest=~/deployApp/ owner=eyindan group=eyindan mode=0644
+    copy: src=./temp/hajp-orchestrator-assembly.jar dest={{project_root}} owner=eyindan group=eyindan mode=0644
 
   - name: Copy Monitor
-    unarchive: src=./temp/hajp-monitor.zip dest=~/deployApp/monitor owner=eyindan group=eyindan mode=0644
+    unarchive: src=./temp/hajp-monitor.zip dest={{project_root}}/monitor owner=eyindan group=eyindan mode=0644
 
   - name: Copy Monitor Config
-    copy: src=./prod.conf dest=~/deployApp/monitor/hajp-monitor-1.0.5/conf owner=eyindan group=eyindan mode=0644
+    copy: src=./prod.conf dest={{project_root}}/monitor/hajp-monitor-1.0.5/conf owner=eyindan group=eyindan mode=0644
 
   - name: Make binary executable
     file: path={{monitor_bin}} owner=eyindan group=eyindan mode=0744
+
+  - name: Copy haproxy config
+    copy: src=./haproxy.cfg dest={{project_root}}/conf owner=eyindan group=eyindan mode=0644
+
+  - name: Copy haproxy dummy pid
+    copy: src=./haproxy.pid dest={{project_root}}/conf owner=eyindan group=eyindan mode=0644
+
+  - name: Copy haproxy dummy cfg
+    copy: src=./haproxy.cfg dest={{project_root}}/conf/haproxy_tmp.cfg owner=eyindan group=eyindan mode=0644
