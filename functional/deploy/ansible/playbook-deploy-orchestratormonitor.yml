@@ -8,13 +8,29 @@
     download_folder: /tmp
     java_name: "{{download_folder}}/jdk1.8.0_40"
     java_archive: "{{download_folder}}/jdk-8u40-linux-x64.rpm"
+    project_root: ~/deployApp
+    monitor_bin: "~/deployApp/monitor/hajp-monitor-1.0.5/bin/hajp-monitor"
+
 
   tasks:
   - name: Delete deployApp folder
-    file: dest=~/deployApp state=absent
+    file: dest={{project_root}} state=absent
+
+  - name: Assures {{project_root}}/monitor dir exists
+    file: path={{project_root}}/monitor state=directory
+
+  - name: install the latest version of Unzip
+    yum: name=unzip state=latest
+    sudo: yes
 
   - name: Copy Orchestrator
     copy: src=./temp/hajp-orchestrator-assembly.jar dest=~/deployApp/ owner=eyindan group=eyindan mode=0644
 
   - name: Copy Monitor
-    copy: src=./temp/hajp-monitor.zip dest=~/deployApp/ owner=eyindan group=eyindan mode=0644
+    unarchive: src=./temp/hajp-monitor.zip dest=~/deployApp/monitor owner=eyindan group=eyindan mode=0644
+
+  - name: Copy Monitor Config
+    copy: src=./prod.conf dest=~/deployApp/monitor/hajp-monitor-1.0.5/conf owner=eyindan group=eyindan mode=0644
+
+  - name: Make binary executable
+    file: path={{monitor_bin}} owner=eyindan group=eyindan mode=0744

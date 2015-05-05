@@ -1,18 +1,11 @@
 #!/bin/bash
 
-rm -rf  temp
-rm -rf WEB-INF
-rm jenkins.war
-
-mkdir -p temp
-mkdir -p WEB-INF/plugins
-
 PASSWORD='\{DESede\}YNtyA/TMlbuQjz/BlYj9Pw=='
 USERNAME=artread
 JENKINSVERSION=1.596.2
 
 # Download core plugin
-wget -O WEB-INF/plugins/hajp-core.hpi --user=$USERNAME --password=$PASSWORD https://arm.mo.ca.am.ericsson.se/artifactory/simple/proj-jnkserv-staging-local/com/ericsson/jenkinsci/hajp/hajp-core/2.0.0/hajp-core-2.0.2.hpi
+wget -O WEB-INF/plugins/hajp-core.hpi --user=$USERNAME --password=$PASSWORD https://arm.mo.ca.am.ericsson.se/artifactory/simple/proj-jnkserv-staging-local/com/ericsson/jenkinsci/hajp/hajp-core/2.0.2/hajp-core-2.0.2.hpi
 
 # Download jquery plugin
 wget -O WEB-INF/plugins/jquery.hpi https://updates.jenkins-ci.org/latest/jquery.hpi
