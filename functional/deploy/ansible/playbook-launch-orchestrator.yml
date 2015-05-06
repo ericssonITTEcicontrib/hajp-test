@@ -1,14 +1,28 @@
 ---
 - hosts: SL
 
-  remote_user: deployment
+  remote_user: eyindan
 
   vars:
-    orchestrator_ip: 142.133.151.170
+    orchestrator_ip: 142.133.151.53
     orchestrator_port: 2551
+    monitor_dir: $HOME/deployApp/monitor
+    monitor_bin: "$HOME/deployApp/monitor/hajp-monitor-1.0.5/bin/hajp-monitor"
+    monitor_conf: "$HOME/deployApp/monitor/hajp-monitor-1.0.5/conf/prod.conf"
 
   tasks:
   - name: Launch orchestrator
-    command: /usr/java/latest/bin/java -jar ~/deployApp/hajp-orchestrator-assembly.jar {{ orchestrator_ip }} {{ orchestrator_port  }}
+    command: /usr/java/latest/bin/java -jar ~/deployApp/hajp-orchestrator-assembly.jar {{ orchestrator_ip }} {{ orchestrator_port  }} > orchOut.txt 2>&1
     async: 999999
     poll: 0
+    args:
+      chdir: deployApp/
+
+  - name: Launch monitor
+    command: "{{ monitor_bin }} -Dconfig.file={{ monitor_conf }}"
+    async: 999999
+    poll: 0
+
+  - name: Where am I?
+    command: "pwd"
+
