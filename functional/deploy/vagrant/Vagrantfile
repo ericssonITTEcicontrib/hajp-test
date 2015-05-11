@@ -38,21 +38,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Pull images and start orchestrator image
   config.vm.provision "docker" do |d|
-    d.pull_images "armdocker.rnd.ericsson.se/proj_hajp/orchestrator:1.0.7"
-    d.pull_images "armdocker.rnd.ericsson.se/proj_hajp/core:2.0.2"
-    d.pull_images "armdocker.rnd.ericsson.se/proj_hajp/monitor:1.0.5"
+    d.pull_images "ericssonitte/hajp-orchestrator:1.0.8"
+    d.pull_images "ericssonitte/hajp-core:2.0.3"
+    d.pull_images "ericssonitte/hajp-monitor:1.0.6"
 
 
-    d.run "orchestrator", image:"armdocker.rnd.ericsson.se/proj_hajp/orchestrator:1.0.7",
+    d.run "orchestrator", image:"ericssonitte/hajp-orchestrator:1.0.8",
       args: "-v /etc/localtime:/etc/localtime:ro -p 2551:2551"
 
-    d.run "core1", image: "armdocker.rnd.ericsson.se/proj_hajp/core:2.0.2",
+    d.run "core1", image: "ericssonitte/hajp-core:2.0.3",
           args: "-v /etc/localtime:/etc/localtime:ro --name core1 --link orchestrator:orchestrator -p 9080:8080"
 
-    d.run "core2", image: "armdocker.rnd.ericsson.se/proj_hajp/core:2.0.2",
+    d.run "core2", image: "ericssonitte/hajp-core:2.0.3",
             args: "-v /etc/localtime:/etc/localtime:ro --link orchestrator:orchestrator -p 9081:8080"
 
-    d.run "monitor", image: "armdocker.rnd.ericsson.se/proj_hajp/monitor:1.0.5",
+    d.run "monitor", image: "ericssonitte/hajp-monitor:1.0.6",
                     args: "-v /etc/localtime:/etc/localtime:ro --link orchestrator:orchestrator -p 9000:9000"
 
   end
